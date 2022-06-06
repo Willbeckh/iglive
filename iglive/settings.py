@@ -38,12 +38,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # user defined app 
+    # user defined apps 
     'ig_app',
     # thirdparties
     'bootstrap4',
-    'fontawesomefree'
+    'fontawesomefree',
+    'easy_thumbnails',
+    'image_cropping',
 ]
+
+from easy_thumbnails.conf import Settings as thumbnail_settings
+# todo: set config for image cropping
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
