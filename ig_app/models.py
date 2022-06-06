@@ -2,7 +2,6 @@ import datetime
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-from django.conf import settings
 
 
 # Create your models here.
@@ -33,8 +32,7 @@ class Post(models.Model):
     image_name = models.CharField('image name', max_length=50, blank=True)
     image_caption = models.TextField(max_length=500, blank=True)
     pub_date = models.DateTimeField(auto_now_add=True)
-    # user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     likes = models.ManyToManyField(
         UserProfile, related_name='likes', blank=True)
     comments = models.ManyToManyField(
@@ -51,4 +49,4 @@ class Post(models.Model):
         return now - datetime.timedelta(days=1) <= self.created_on <= now
 
 
-# todo: create posts model
+# todo: create likes model
