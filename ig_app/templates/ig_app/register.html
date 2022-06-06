@@ -4,10 +4,10 @@
 {% block content %}
 <div class="col">
   <div class="register-form w-25 mx-auto bg-warning p-3 rounded">
-    
     <form action="" method="POST">
       {% csrf_token %}
       <!-- form fields -->
+      <h3 class="text-center">Sign Up</h3>
       <div class="form-group">{{ form.username }}</div>
 
       <div class="form-group">
@@ -30,8 +30,10 @@
           value="Sign Up"
         />
       </div>
-
-      <p class="text-muted">already have an account. <a href="#">Sign in</a></p>
+      {{ form.errors }}
+      <p class="text-muted">
+        already have an account. <a href="{% url 'igapp:login' %}">Sign in</a>
+      </p>
     </form>
   </div>
 </div>
