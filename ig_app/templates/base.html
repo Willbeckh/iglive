@@ -14,13 +14,7 @@
 
     <!-- static file links -->
     {% block styles %} {% bootstrap_css %}
-
-    <link rel="stylesheet" type="text/css" href="#" />
-
-    <!-- <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.15/css/mdb.min.css"
-      rel="stylesheet"
-    /> -->
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
     {% endblock %}
     <!-- end static links -->
   </head>
@@ -40,11 +34,6 @@
     ></script>
     {% bootstrap_javascript %}
     <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.15/js/mdb.min.js"
-    ></script>
     {% endblock %}
   </body>
 </html>
