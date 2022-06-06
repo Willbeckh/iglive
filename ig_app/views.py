@@ -3,6 +3,7 @@ from django.views import View
 from django.http import HttpResponse, Http404
 from django.urls import reverse
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 
 # app imports
 from .forms import CreateUserForm
@@ -46,8 +47,29 @@ class RegisterView(View):
 
 
 class LoginView(View):
+    context = {
+        'title': 'Login',
+    }
+
     def get(self, request):
-        context = {
-            'title': 'Login',
-        }
-        return render(request, 'ig_app/login.html', context)
+        return render(request, 'ig_app/login.html', self.context)
+
+    def post(self, request):
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('igapp:index')
+        else:
+            messages.error(
+                request, 'Invalid credentials, please provide valid credentials')
+        return render(request, 'ig_app/login.html', self.context)
+
+
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect('igapp:index')
