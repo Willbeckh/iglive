@@ -31,29 +31,62 @@
         </div>
         <ul class="navbar-nav top-nav__middle bg-info">
           <li class="nav-item active">
-            <a class="nav-link" href="{% url 'igapp:index' %}"
+            <a
+              class="nav-link"
+              href="{% url 'igapp:index' %}"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="home"
               ><img src="" alt="" /> <span class="sr-only">(current)</span
               ><i class="fas fa-home"></i
             ></a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#"
+            <a
+              class="nav-link"
+              href="#"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="add post"
               ><img src="" alt="" /><i class="fas fa-plus"></i
             ></a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#"
+            <a
+              class="nav-link"
+              href="#"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="profile"
               ><img src="" alt="" /><i class="fas fa-user"></i
             ></a>
           </li>
 
+          {% if request.user.is_anonymous %}
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'igapp:register' %}"
+            <a
+              class="nav-link"
+              href="{% url 'igapp:login' %}"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="login"
               ><img src="" alt="" /><i class="fas fa-right-to-bracket"></i
             ></a>
           </li>
+          {% else %}
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="{% url 'igapp:logout' %}"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="logout"
+              ><img src="" alt="" /><i class="fas fa-right-from-bracket"></i
+            ></a>
+          </li>
+          {% endif %}
         </ul>
       </div>
     </nav>
