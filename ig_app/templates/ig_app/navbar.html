@@ -1,7 +1,9 @@
 <div class="w-100 top-nav__container bg-info">
   <div class="w-75 mx-auto top-nav">
     <nav class="navbar navbar-expand-lg navbar-dark bg-info">
-      <a class="navbar-brand" href="/"> <img src="" alt="" />IgLive</a>
+      <a class="navbar-brand" href="{% url 'igapp:index' %}">
+        <img src="" alt="" />IgLive</a
+      >
       <button
         class="navbar-toggler"
         type="button"
@@ -16,12 +18,12 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <div class="mx-auto">
-          <form class="form-inline my-2 my-lg-0">
+          <form class="form-inline my-2 my-lg-0" action="/">
             <div class="input-group mb-2 mr-sm-2">
               <input
                 class="form-control"
                 type="search"
-                placeholder="Search"
+                placeholder="&#x1F50E;  Search"
                 aria-label="Search"
               />
             </div>
@@ -29,20 +31,28 @@
         </div>
         <ul class="navbar-nav top-nav__middle bg-info">
           <li class="nav-item active">
-            <a class="nav-link" href="#"
-              ><img src="" alt="" />
-              <span class="sr-only">(current)</span>Home</a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#"><img src="" alt="" />friends</a>
+            <a class="nav-link" href="{% url 'igapp:index' %}"
+              ><img src="" alt="" /> <span class="sr-only">(current)</span
+              ><i class="fas fa-home"></i
+            ></a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#"><img src="" alt="" />posts</a>
+            <a class="nav-link" href="#"
+              ><img src="" alt="" /><i class="fas fa-plus"></i
+            ></a>
           </li>
+
           <li class="nav-item">
-            <a class="nav-link" href="#"><img src="" alt="" />login</a>
+            <a class="nav-link" href="#"
+              ><img src="" alt="" /><i class="fas fa-user"></i
+            ></a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'igapp:register' %}"
+              ><img src="" alt="" /><i class="fas fa-right-to-bracket"></i
+            ></a>
           </li>
         </ul>
       </div>
