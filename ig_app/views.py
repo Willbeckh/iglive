@@ -7,14 +7,16 @@ from django.contrib.auth import authenticate, login, logout
 
 # app imports
 from .forms import CreateUserForm
+from .models import Post
+
 
 # Create your views here.
-
-
 class HomeView(View):
     def get(self, request):
+        posts = Post.objects.order_by('-pub_date')[:20]
         context = {
             'title': 'Home',
+            'posts': posts
         }
         return render(request, 'ig_app/index.html', context)
 
