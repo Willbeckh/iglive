@@ -6,7 +6,7 @@
   <div class="col col-md-12">
     <div class="hero">
       {% if request.user.is_authenticated %}
-      <p class="">Hello {{ request.user }}, Home is where the heart is</p>
+      <p class="">Hey {{ request.user }}, catch a vibe..</p>
       {% endif %}
     </div>
     <div class="posts justify-content-center">
@@ -31,7 +31,11 @@
             <i class="fa-regular fa-heart"></i>
           </label>
           <br />
-          <p class="badge">{{ post.user }}</p>
+          <p class="badge text-dark">
+            <a href="{% url 'igapp:profile' post.user.id %}"
+              >{{ post.user }}</a
+            >
+          </p>
           <span>{{ post.image_caption|truncatechars:15 }}</span>
         </div>
       </div>
