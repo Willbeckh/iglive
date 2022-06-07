@@ -2,46 +2,53 @@
 
 <!-- index wrapper -->
 {% block content %}
-<div class="row">
-  <div class="col col-md-12">
+<div class="row d-flex justify-content-center">
+  <div class="col col-md-6">
     <div class="hero">
       {% if request.user.is_authenticated %}
-      <p class="">Hey {{ request.user }}, catch a vibe..</p>
+      <div class="post-form">
+        <p class="">Hey {{ request.user }}, catch a vibe..</p>
+      </div>
       {% endif %}
     </div>
-    <div class="posts justify-content-center">
-      {% for post in posts %}
-      <div class="card w-50 mb-3">
-        <div class="card-header">
-          <h2>hey {{ post.user}}.</h2>
-          <small>{{ post.pub_date|timesince }} ago</small>
-        </div>
-        {% if post.image_file %}
-        <img src="{{ post.image_file.url }}" alt="{{ post.image_name }}" />
-        {% endif %}
-        <div class="card-body">
-          <input
-            type="checkbox"
-            class="checkbox_item"
-            value=""
-            name="item"
-            id="radio2"
-          />
-          <label class="label_item" for="radio2">
-            <i class="fa-regular fa-heart"></i>
-          </label>
-          <br />
-          <p class="badge text-dark">
-            <a href="{% url 'igapp:profile' post.user.id %}"
-              >{{ post.user }}</a
-            >
+
+    <!-- <div class="posts"> -->
+    {% for post in posts %}
+    <div class="card mb-3 post_card">
+      <div class="card-header">
+        <p class="post-title">{{ post.user}}.</p>
+      </div>
+      {% if post.image_file %}
+      <img src="{{ post.image_file.url }}" alt="{{ post.image_name }}" />
+      {% endif %}
+      <div class="card-body">
+        <input
+          type="checkbox"
+          class="checkbox_item"
+          value=""
+          name="item"
+          id="radio2"
+        />
+        <label class="label_item" for="radio2">
+          <i class="fa-regular fa-heart"></i> </label
+        ><br />
+        <div class="post-card__details">
+          <p class="badge text-dark post-title">
+            <a href="{% url 'igapp:profile' post.user.id %}">{{ post.user }}</a>
           </p>
           <span>{{ post.image_caption|truncatechars:15 }}</span>
+          <p>
+            <small class="text-muted"
+              >{{ post.pub_date|timesince|title }} ago</small
+            >
+          </p>
         </div>
+        <hr />
       </div>
-
-      {% endfor %}
     </div>
+
+    {% endfor %}
+    <!-- </div> -->
   </div>
 </div>
 {% endblock %}
