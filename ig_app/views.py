@@ -90,14 +90,17 @@ class PostView(View):
 
     # add post
     def post(self, request):
-        if not request.user.is_staff or not request.user.is_superuser:
-            raise Http404
+        # if not request.user.is_staff or not request.user.is_superuser:
+        #     raise Http404
         form = CreatePostForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            # form = CreatePostForm()
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
+            print(post.user)
+            form = CreatePostForm()
             messages.success(request, 'Post added successfully!')
-            return redirect('igapp:index')
+            return redirect(reverse('igapp:index'))
         context = {
             'form': form
         }
