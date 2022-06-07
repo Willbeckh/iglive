@@ -4,7 +4,7 @@ from django.urls import path
 # from django.contrib.auth.decorators import login_required, permission_required
 
 # local imports
-from ig_app.views import HomeView, RegisterView, LoginView, LogoutView, PostView
+from ig_app.views import HomeView, RegisterView, LoginView, LogoutView, PostView, ProfileView
 
 app_name = 'igapp'  # application namespace
 urlpatterns = [
@@ -13,4 +13,5 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('newpost/', PostView.as_view(), name='newpost'),
+    path('<int:user_id>/', ProfileView.as_view(), name='profile'),
 ]
