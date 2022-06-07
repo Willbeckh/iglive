@@ -1,13 +1,14 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views import View
 from django.http import HttpResponse, Http404
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 # app imports
-from .forms import CreateUserForm, CreatePostForm
+from .forms import CreateUserForm, CreatePostForm, ProfileForm
 from .models import Post
 
 
@@ -92,8 +93,6 @@ class PostView(View):
 
     # add post
     def post(self, request):
-        # if not request.user.is_staff or not request.user.is_superuser:
-        #     raise Http404
         form = CreatePostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
@@ -108,3 +107,22 @@ class PostView(View):
         }
         return render(request, 'ig_app/post_form.html', context)
 
+
+
+# user profile view
+class ProfileView(View):
+    def get(self, request, user_id):
+        form = ProfileForm()
+        # user = request.user
+        try:
+            user = get_object_or_404(User, pk=user_id)
+        except User.DoesNotExist:
+            raise Http404("No User found!")
+        context = {
+            'title': 'Profile',
+            'user': user,
+            'form': form
+        }
+        return render(request, 'ig_app/profile.html', context)
+    
+    # process post
