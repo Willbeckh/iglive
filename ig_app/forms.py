@@ -5,7 +5,13 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 # local apps
-from ig_app.models import Post
+from ig_app.models import Post, UserProfile
+
+
+class ProfileForm(ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['profile_pic', 'bio']
 
 
 # your code here
