@@ -1,0 +1,16 @@
+.checkbox_item {
+  display: none !important;
+}
+
+.label_item {
+  opacity: 0.7;
+  font-size: 1.4em;
+}
+
+.checkbox_item:checked + label {
+  opacity: 2;
+}
+
+label {
+  cursor: pointer;
+}

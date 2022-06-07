@@ -42,10 +42,22 @@
             ></a>
           </li>
 
+          {% if request.user.is_anonymous %}
           <li class="nav-item">
             <a
               class="nav-link"
-              href="#"
+              href="{% url 'igapp:login' %}"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="login"
+              ><img src="" alt="" /><i class="fas fa-right-to-bracket"></i
+            ></a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="{% url 'igapp:newpost' %}"
               data-toggle="tooltip"
               data-placement="bottom"
               title="add post"
@@ -64,18 +76,6 @@
             ></a>
           </li>
 
-          {% if request.user.is_anonymous %}
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              href="{% url 'igapp:login' %}"
-              data-toggle="tooltip"
-              data-placement="bottom"
-              title="login"
-              ><img src="" alt="" /><i class="fas fa-right-to-bracket"></i
-            ></a>
-          </li>
-          {% else %}
           <li class="nav-item">
             <a
               class="nav-link"
