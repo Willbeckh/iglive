@@ -2,36 +2,56 @@
 
 <!-- user profile page -->
 {% block content %}
-<!-- todo: diplay user profile -->
 <div class="row">
-  <div class="col col-md-8">
+  <div class="col col-md-8 mx-auto">
     <div class="user-profile">
       <div class="row user-profile_header bg-warning p-3">
-        <div class="col-3 user-profile__img">
+        <div class="col-3 user-profile__img bg-primary">
           <img src="{{ user.profile_pic.url }}" alt="user avatar" />
         </div>
         <div class="col">
           <p class="user-profile__username">
-            {{user.username}}<span class="me-3">
-              <button
-                type="button"
-                class="btn btn-outline-secondary btn-sm"
-                data-toggle="modal"
-                data-target="#profileUpdate"
-              >
-                edit profile
-              </button></span
-            >
+            <strong>{{user.username}}</strong>
           </p>
-
           <small class="user-profile__email">{{ user.email }}</small>
+
+          {% if user.id == request.user.id %}
+          <button
+            type="button"
+            class="btn btn-outline-secondary btn-sm"
+            data-toggle="modal"
+            data-target="#profileUpdate"
+          >
+            edit profile
+          </button>
+          {% else %}
+          <input
+            type="submit"
+            class="btn btn-outline-success btn-sm"
+            value="follow"
+          />
+          {% endif %}
           <p class="user-profile__bio">{{user.bio}}</p>
         </div>
       </div>
     </div>
+    <hr />
+    <!-- all user posts   -->
+    <div class="row mt-4 bg-info user-posts">
+      {% for post in posts %} {% if post.user.id == user.id %}
+      <div class="col col-md-4 p-2">
+        <div class="card" style="width: 15rem">
+          <img src="{{ post.image_file.url }}" class="img-fluid" />
+          {% else %}
+          <p>No posts available.</p>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <!-- all user posts end -->
   </div>
 </div>
-<!-- *add user profile edit -->
 
 <!-- profile edit modal -->
 <div
@@ -45,7 +65,9 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title text-center" id="exampleModalCenterTitle">Update Profile</h5>
+        <h5 class="modal-title text-center" id="exampleModalCenterTitle">
+          Update Profile
+        </h5>
         <button
           type="button"
           class="close"
@@ -56,7 +78,12 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="" method="POST" enctype="multipart/form-data">
+        <!-- ! use ajax to process this. -->
+        <form
+          action="{% url 'igapp:profile' user.id %}"
+          method="POST"
+          enctype="multipart/form-data"
+        >
           {% csrf_token %}
           <div class="input-group mb-2">{{ form.profile_pic }}</div>
           <div class="input-group mb-2">{{ form.bio }}</div>
@@ -73,10 +100,6 @@
       </div>
     </div>
   </div>
+  <!-- profile edit modal end -->
 </div>
-<!-- profile edit modal end -->
-
-<!-- todo; display user posts -->
-
 {% endblock %}
-<!-- user profile page -->
