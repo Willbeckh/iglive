@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+<!-- user profile page -->
+{% block content %}
+<!-- todo: diplay user profile -->
+<div class="row">
+  <div class="col col-md-8">
+    <div class="user-profile">
+      <div class="row user-profile_header bg-warning p-3">
+        <div class="col-3 user-profile__img">
+          <img src="{{ user.profile_pic.url }}" alt="user avatar" />
+        </div>
+        <div class="col">
+          <p class="user-profile__username">
+            {{user.username}}<span class="me-3">
+              <button
+                type="button"
+                class="btn btn-outline-secondary btn-sm"
+                data-toggle="modal"
+                data-target="#profileUpdate"
+              >
+                edit profile
+              </button></span
+            >
+          </p>
+
+          <small class="user-profile__email">{{ user.email }}</small>
+          <p class="user-profile__bio">{{user.bio}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- *add user profile edit -->
+
+<!-- profile edit modal -->
+<div
+  class="modal fade"
+  id="profileUpdate"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalCenterTitle">Update Profile</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="input-group mb-2">{{ form.profile_pic }}</div>
+          <div class="input-group mb-2">{{ form.bio }}</div>
+          <div class="modal-footer">
+            <input
+              type="submit"
+              class="btn btn-success btn-sm"
+              name="profile_update"
+              id=""
+              value="update"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- profile edit modal end -->
+
+<!-- todo; display user posts -->
+
+{% endblock %}
+<!-- user profile page -->
