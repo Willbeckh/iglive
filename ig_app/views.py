@@ -4,6 +4,7 @@ from django.http import HttpResponse, Http404
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 # app imports
 from .forms import CreateUserForm, CreatePostForm
@@ -79,6 +80,7 @@ class LogoutView(View):
 
 # add post view
 class PostView(View):
+    login_required = True
     form = CreatePostForm()
     context = {
         'title': 'New Post',
@@ -105,3 +107,4 @@ class PostView(View):
             'form': form
         }
         return render(request, 'ig_app/post_form.html', context)
+
