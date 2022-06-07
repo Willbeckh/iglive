@@ -1,3 +1,9 @@
+/* landig page view*/
+body {
+  background-color: #fafafa;
+}
+
+/* post like btn */
 .checkbox_item {
   display: none !important;
 }
@@ -14,3 +20,26 @@
 label {
   cursor: pointer;
 }
+/* post like btn end */
+
+/* post card section */
+.post_card {
+  background-color: #ffffff;
+}
+
+.post_card .card-header {
+  background-color: #ffffff;
+}
+.post_author a {
+  color: #000;
+}
+.post_author {
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.post-card__details {
+  line-height: 0.7em;
+}
+/* post card section end */
+/* landig page view*/
