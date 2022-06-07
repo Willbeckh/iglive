@@ -27,6 +27,5 @@ class CreatePostForm(forms.ModelForm):
         fields = ['image_file', 'image_name', 'image_caption']
         
         widgets = {
-            # 'image_file' : forms.FileInput(attrs={ 'value':'Image File...'}),
-            'image_caption': forms.Textarea(attrs={'class':'form-control', 'placeholder':'Image Caption...', 'cols':30, 'rows':5}),
+            'image_caption': forms.Textarea(attrs={'class':'form-control', 'placeholder':'Image caption...', 'cols':30, 'rows':5}),
         }
