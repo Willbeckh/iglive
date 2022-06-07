@@ -98,7 +98,6 @@ class PostView(View):
             post = form.save(commit=False)
             post.user = request.user
             post.save()
-            print(post.user)
             form = CreatePostForm()
             messages.success(request, 'Post added successfully!')
             return redirect(reverse('igapp:index'))
@@ -116,13 +115,21 @@ class ProfileView(View):
         # user = request.user
         try:
             user = get_object_or_404(User, pk=user_id)
+            posts = Post.objects.filter(user=user_id).order_by('-pub_date')[:20]
         except User.DoesNotExist:
             raise Http404("No User found!")
         context = {
             'title': 'Profile',
             'user': user,
-            'form': form
+            'form': form,
+            'posts': posts
         }
         return render(request, 'ig_app/profile.html', context)
     
-    # process post
+    # process profile form post
+    def post(self, request):
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = request.user
+            return redirect(reverse('igapp:profile'))
