@@ -1,5 +1,7 @@
 """this defines the urlconf of the ig application"""
 from django.urls import path
+# from django.views.generic import TemplateView
+# from django.contrib.auth.decorators import login_required, permission_required
 
 # local imports
 from ig_app.views import HomeView, RegisterView, LoginView, LogoutView, PostView
