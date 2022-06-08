@@ -6,19 +6,22 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # app imports
 from .forms import CreateUserForm, CreatePostForm, ProfileForm
-from .models import Post
+from .models import Post, Like
 
 
 # Create your views here.
 class HomeView(View):
     def get(self, request):
         posts = Post.objects.order_by('-pub_date')[:20]
+        user = request.user
         context = {
             'title': 'Home',
-            'posts': posts
+            'posts': posts,
+            'user': user
         }
         return render(request, 'ig_app/index.html', context)
 
@@ -107,15 +110,17 @@ class PostView(View):
         return render(request, 'ig_app/post_form.html', context)
 
 
-
 # user profile view
-class ProfileView(View):
+class ProfileView(LoginRequiredMixin, View):
+    login_url = '/login/'
+
     def get(self, request, user_id):
         form = ProfileForm()
         # user = request.user
         try:
             user = get_object_or_404(User, pk=user_id)
-            posts = Post.objects.filter(user=user_id).order_by('-pub_date')[:20]
+            posts = Post.objects.filter(
+                user=user_id).order_by('-pub_date')[:20]
         except User.DoesNotExist:
             raise Http404("No User found!")
         context = {
@@ -125,7 +130,7 @@ class ProfileView(View):
             'posts': posts
         }
         return render(request, 'ig_app/profile.html', context)
-    
+
     # process profile form post
     def post(self, request):
         form = ProfileForm(request.POST, request.FILES)
@@ -133,3 +138,23 @@ class ProfileView(View):
             profile = form.save(commit=False)
             profile.user = request.user
             return redirect(reverse('igapp:profile'))
+
+
+class LikeView(LoginRequiredMixin, View):
+    login_url = '/login/'
+
+    def get(self, request):
+        return redirect('igapp:index')
+
+    def post(self, request):
+        user = request.user
+        post_id = request.POST.get('post_id')
+        # post_obj = get_object_or_404(Like, post=user)
+        post_obj = get_object_or_404(Post, pk=post_id)
+
+        if user in post_obj.likes.all():
+            post_obj.likes.remove(user)
+        else:
+            post_obj.likes.add(user)
+
+        return redirect('igapp:index')
