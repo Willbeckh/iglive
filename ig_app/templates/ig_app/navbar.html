@@ -1,0 +1,94 @@
+<div class="w-100 top-nav__container bg-info">
+  <div class="w-75 mx-auto top-nav">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+      <a class="navbar-brand" href="{% url 'igapp:index' %}">
+        <img src="" alt="" />IgLive</a
+      >
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="mx-auto">
+          <form class="form-inline my-2 my-lg-0" action="/">
+            <div class="input-group mb-2 mr-sm-2">
+              <input
+                class="form-control"
+                type="search"
+                placeholder="&#x1F50E;  Search"
+                aria-label="Search"
+              />
+            </div>
+          </form>
+        </div>
+        <ul class="navbar-nav top-nav__middle bg-info">
+          <li class="nav-item active">
+            <a
+              class="nav-link"
+              href="{% url 'igapp:index' %}"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="home"
+              ><img src="" alt="" /> <span class="sr-only">(current)</span
+              ><i class="fas fa-home"></i
+            ></a>
+          </li>
+
+          {% if request.user.is_anonymous %}
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="{% url 'igapp:login' %}"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="login"
+              ><img src="" alt="" /><i class="fas fa-right-to-bracket"></i
+            ></a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="{% url 'igapp:newpost' %}"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="add post"
+              ><img src="" alt="" /><i class="fas fa-plus"></i
+            ></a>
+          </li>
+
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="{% url 'igapp:profile' request.user.id %}"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="profile"
+              ><img src="" alt="" /><i class="fas fa-user"></i
+            ></a>
+          </li>
+
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="{% url 'igapp:logout' %}"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="logout"
+              ><img src="" alt="" /><i class="fas fa-right-from-bracket"></i
+            ></a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+  </div>
+</div>
