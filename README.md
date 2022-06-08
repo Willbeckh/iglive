@@ -92,9 +92,9 @@ python3 manage.py test
 
 # Deploying
 
-To deploy the application to Heroku follow this guide: [Heroku deploy](https: // gist.github.com/bernie-haxx/01e28cfbd911f87c7df8ee33cbdaa593)
+To deploy the application to Heroku follow this guide: [Heroku deploy](https://gist.github.com/bernie-haxx/01e28cfbd911f87c7df8ee33cbdaa593)
 
-Aslo click here to see a version of this project deployed to Heroku: [Picasso Gallery](https://photol.herokuapp.com/)
+Aslo click here to see a version of this project deployed to Heroku: [Photol](https://photol.herokuapp.com/)
 
 # Contributing
 
@@ -110,6 +110,7 @@ At the moment of completion and deploy, no bigs have been found yet, but if you 
 Created with ❤️ by Willbeckh.
 
 # Credits
+
 Me, and StackOverflow.
 
 # License
