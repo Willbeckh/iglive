@@ -5,7 +5,7 @@
 <div class="row">
   <div class="col col-md-8 mx-auto">
     <div class="user-profile">
-      <div class="row user-profile_header bg-warning p-3">
+      <div class="row user-profile_header p-3">
         <div class="col-3 user-profile__img bg-primary">
           <img src="{{ user.profile_pic.url }}" alt="user avatar" />
         </div>
@@ -37,14 +37,17 @@
     </div>
     <hr />
     <!-- all user posts   -->
-    <div class="row mt-4 bg-info user-posts">
-      {% for post in posts %} {% if post.user.id == user.id %}
-      <div class="col col-md-4 p-2">
-        <div class="card" style="width: 15rem">
-          <img src="{{ post.image_file.url }}" class="img-fluid" />
-          {% else %}
-          <p>No posts available.</p>
-          {% endif %}
+    <div class="row mt-4 user-posts">
+      {% for post in posts %}
+      <div class="card-colums">
+        <div class="col col-md-4 p-2">
+          <div class="card current-user_posts" style="width: 15rem">
+            {% if user.id == post.user.id %}
+            <img src="{{ post.image_file.url }}" class="img-fluid" />
+            {% else %}
+            <p>No posts.</p>
+            {% endif %}
+          </div>
         </div>
       </div>
       {% endfor %}
