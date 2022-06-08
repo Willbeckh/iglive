@@ -16,24 +16,38 @@
     {% for post in posts %}
     <div class="card mb-3 post_card">
       <div class="card-header">
-        <p class="post-title">{{ post.user}}.</p>
+        <h3 class="post-title">
+          <a href="{% url 'igapp:profile' post.user.id %}">{{ post.user}}</a>
+        </h3>
       </div>
       {% if post.image_file %}
       <img src="{{ post.image_file.url }}" alt="{{ post.image_name }}" />
       {% endif %}
       <div class="card-body">
-        <input
-          type="checkbox"
-          class="checkbox_item"
-          value=""
-          name="item"
-          id="radio2"
-        />
-        <label class="label_item" for="radio2">
-          <i class="fa-regular fa-heart"></i> </label
-        ><br />
+        <form action="{% url 'igapp:like'  %}" method="post">
+          {% csrf_token%}
+          <input
+            type="hidden"
+            class="checkbox_item"
+            name="post_id"
+            value="{{post.id}}"
+            id="radio2"
+          />
+          {% if user not in post.likes.all %}
+          <button type="submit" class="btn btn-primary btn-sm">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+          <small>{{ post.likes.all.count }} <em>likes</em></small>
+
+          {% else %}
+          <button class="btn btn-danger btn-sm">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+          <small>{{ post.likes.all.count }} <em>likes</em></small>
+          {% endif %}
+        </form>
         <div class="post-card__details">
-          <p class="badge text-dark post-title">
+          <p class="badge post_author">
             <a href="{% url 'igapp:profile' post.user.id %}">{{ post.user }}</a>
           </p>
           <span>{{ post.image_caption|truncatechars:15 }}</span>
