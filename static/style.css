@@ -1,3 +1,9 @@
+/* landig page view*/
+body {
+  background-color: #fafafa;
+}
+
+/* post like btn */
 .checkbox_item {
   display: none !important;
 }
@@ -14,3 +20,45 @@
 label {
   cursor: pointer;
 }
+label:hover {
+  color: #000;
+}
+/* post like btn end */
+
+/* post card section */
+.post_card {
+  background-color: #ffffff;
+}
+
+.post_card .card-header {
+  background-color: #ffffff;
+}
+.post_author a {
+  color: #000;
+}
+.post_author {
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.post-card__details {
+  line-height: 0.7em;
+}
+
+.post-title {
+  font-weight: bold;
+}
+
+.post-title a {
+  text-decoration: none;
+  color: #03033f;
+}
+/* post card section end */
+
+/* landig page view*/
+
+/* user profile page */
+.user-profile_header {
+  background-color: rgba(14, 13, 13, 0.075);
+}
+/* user profile page end */

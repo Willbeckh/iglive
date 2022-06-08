@@ -22,5 +22,5 @@ import ig_app
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('ig_app.urls'))
+    path('', include('ig_app.urls'), name='igapp'),
 ] +  static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,23 +1,27 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views import View
 from django.http import HttpResponse, Http404
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # app imports
-from .forms import CreateUserForm, CreatePostForm
-from .models import Post
+from .forms import CreateUserForm, CreatePostForm, ProfileForm
+from .models import Post, Like
 
 
 # Create your views here.
 class HomeView(View):
     def get(self, request):
         posts = Post.objects.order_by('-pub_date')[:20]
+        user = request.user
         context = {
             'title': 'Home',
-            'posts': posts
+            'posts': posts,
+            'user': user
         }
         return render(request, 'ig_app/index.html', context)
 
@@ -92,14 +96,11 @@ class PostView(View):
 
     # add post
     def post(self, request):
-        # if not request.user.is_staff or not request.user.is_superuser:
-        #     raise Http404
         form = CreatePostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.user = request.user
             post.save()
-            print(post.user)
             form = CreatePostForm()
             messages.success(request, 'Post added successfully!')
             return redirect(reverse('igapp:index'))
@@ -108,3 +109,52 @@ class PostView(View):
         }
         return render(request, 'ig_app/post_form.html', context)
 
+
+# user profile view
+class ProfileView(LoginRequiredMixin, View):
+    login_url = '/login/'
+
+    def get(self, request, user_id):
+        form = ProfileForm()
+        # user = request.user
+        try:
+            user = get_object_or_404(User, pk=user_id)
+            posts = Post.objects.filter(
+                user=user_id).order_by('-pub_date')[:20]
+        except User.DoesNotExist:
+            raise Http404("No User found!")
+        context = {
+            'title': 'Profile',
+            'user': user,
+            'form': form,
+            'posts': posts
+        }
+        return render(request, 'ig_app/profile.html', context)
+
+    # process profile form post
+    def post(self, request):
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = request.user
+            return redirect(reverse('igapp:profile'))
+
+
+class LikeView(LoginRequiredMixin, View):
+    login_url = '/login/'
+
+    def get(self, request):
+        return redirect('igapp:index')
+
+    def post(self, request):
+        user = request.user
+        post_id = request.POST.get('post_id')
+        # post_obj = get_object_or_404(Like, post=user)
+        post_obj = get_object_or_404(Post, pk=post_id)
+
+        if user in post_obj.likes.all():
+            post_obj.likes.remove(user)
+        else:
+            post_obj.likes.add(user)
+
+        return redirect('igapp:index')
